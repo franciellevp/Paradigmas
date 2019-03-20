@@ -29,3 +29,9 @@ removeVowelSemLambda string = filter (`notElem` "aeiouAEIOU") string
 -- e que retorne outra string substituindo os demais caracteres por '-', mas mantendo os espaços.
 addHyphen :: String -> String
 addHyphen string = map (\c -> if c /= ' ' then '-' else ' ') string
+
+-- 6.Escreva uma função que, dado o nome completo de uma pessoa, obtenha seu primeiro nome.
+-- Suponha que cada parte do nome seja separada por um espaço e que
+-- não existam espaços no início ou fim do nome.
+firstName :: String -> String
+firstName nome = takeWhile (/= ' ') nome

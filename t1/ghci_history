@@ -1,0 +1,100 @@
+firstName "lalal aaa"
+:load t1.hs
+addHyphen "aa bb c AAA"
+addHyphen "Francielle Prerira"
+:load t1.hs
+:load t1.hs
+:load t1.hs
+:load t1.hs
+:load t1.hs
+removeVowel "Francielle Perira"
+:load t1.hs
+removeVowel "Francielle"
+removeVowel "Francielle Pereira"
+removeVowel "Francielle Perera"
+removeVowelSemLambda "francielle Pereira"
+:load t1.hs
+removeVowel "Francielle"
+:load t1.hs
+:load t1.hs
+:load t1.hs
+removeVowel "Fran"
+removeVowel Fran
+:load t1.hs
+:load t1.hs
+:load t1.hs
+removeVowel "Francielle"
+removeVowel "Francielle"
+:load t1.hs
+:load t1.hs
+:load t1.hs
+:load t1.hs
+not (elem "ae" "tesate")
+ 'a'  `elem`  "tesate"
+not (elem 'a' "tesate")
+elem 'a' "tesate"
+elem 'a' "teste"
+elem a "teste"
+removeVowel "Francielle"
+removeVowel Francielle
+:load t1.hs
+htmlListItemsSemLambda ["abra", "ca", "dabra"]
+:load t1.hs
+:load t1.hs
+htmlListItems ["abra", "ca", "dabra"]
+:load t1.hs
+addComma ["Fran", "P", "lalalal duhas"]
+:load t1.hs
+:load t1.hs
+isVowel 'A'
+isVowel 'a'
+isVowel 'b'
+:load t1.hs
+isVowel 'b'
+isVowel 'B'
+isVowel 'a'
+:load t1.hs
+:load t1.hs
+isVowel 'A'
+isVowel 'D'
+isVowel 'a'
+isVowel 'd'
+:load t1.hs
+:load t1.hs
+isVowel 'd'
+:load ex1.hs
+takeWhile (/= mod 2) [1,2,3,4,5]
+takeWhile (mod n 2 == 0) [1,2,3,4,5]
+takeWhile (mod 2 == 0) [1,2,3,4,5]
+:load ex1.hs
+takeWhile (mod 2 == 0) [1,2,3,4,5]
+takeWhile (/=' ') "Fulana de Tal"
+takeWhile (< 5) [1,2,3,4,5]
+:load ex1.hs
+:load ex1.hs
+isNegative [-1, 3.8, -9.86]
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+countSpaces "lala fasuh sdas"
+:load ex1.hs
+:load ex1.hs
+countSpaces "lala fasuh sdas"
+returnSpaces "la la"
+returnSpaces "la la"
+countSpaces "lala fasuh sdas"
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
+:load ex1.hs
