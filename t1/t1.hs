@@ -1,3 +1,6 @@
+import Data.List.Split -- usado no ex 8
+import Data.Char -- usada no ex 9
+
 -- 1. Crie uma função isVowel :: Char -> Bool que verifique se um caracter é uma vogal ou não.
 isVowel :: Char -> Bool
 isVowel c = length (filter (\x -> x == c) "aeiouAEIOU") > 0
@@ -35,3 +38,18 @@ addHyphen string = map (\c -> if c /= ' ' then '-' else ' ') string
 -- não existam espaços no início ou fim do nome.
 firstName :: String -> String
 firstName nome = takeWhile (/= ' ') nome
+
+-- 7.Escreva uma função isInt :: String -> Bool que verifique se uma dada string só contém dígitos de 0 a 9
+isInt :: String -> Bool
+isInt string = length (filter (\c -> not(elem c "0123456789")) string) == 0
+
+-- 8.Escreva uma função lastName :: String -> String que, dado o nome completo de uma pessoa, obtenha seu último sobrenome.
+--Suponha que cada parte do nome seja separada por um espaço e que não existam espaços no início ou fim do nome. 
+lastName :: String -> String
+lastName nome = last (splitOn " " nome)
+
+-- 9.Escreva uma função que, dado o nome completo de uma pessoa, crie um nome de usuário (login) da pessoa, formado por:
+-- primeira letra do nome seguida do sobrenome, tudo em minúsculas.
+userName :: String -> String
+userName nome = [toLower (head nome)] ++ map toLower (lastName nome)
+--[toLower (head (lastName nome))]
