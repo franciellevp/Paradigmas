@@ -33,6 +33,12 @@ removeVowelSemLambda string = filter (`notElem` "aeiouAEIOU") string
 addHyphen :: String -> String
 addHyphen string = map (\c -> if c /= ' ' then '-' else ' ') string
 
+testAddHyphen :: Char -> Char
+testAddHyphen c = if c /= ' ' then '-' else ' '
+
+addHyphenSemLambda :: String -> String
+addHyphenSemLambda string = map testAddHyphen string
+
 -- 6.Escreva uma função que, dado o nome completo de uma pessoa, obtenha seu primeiro nome.
 -- Suponha que cada parte do nome seja separada por um espaço e que
 -- não existam espaços no início ou fim do nome.
@@ -52,4 +58,38 @@ lastName nome = last (splitOn " " nome)
 -- primeira letra do nome seguida do sobrenome, tudo em minúsculas.
 userName :: String -> String
 userName nome = [toLower (head nome)] ++ map toLower (lastName nome)
---[toLower (head (lastName nome))]
+
+-- 10.Escreva uma função que substitua vogais em uma string, conforme o esquema a seguir: a = 4, e = 3, i = 2, o = 1, u = 0.
+charToInt :: Char -> Char
+charToInt c
+   | c == 'a' || c == 'A' = '4'
+   | c == 'e' || c == 'E'= '3'
+   | c == 'i' || c == 'I' = '2'
+   | c == 'o' || c == 'O' = '1'
+   | c == 'u' || c == 'U' = '0'
+   | otherwise = c
+
+encodeName :: String -> String
+encodeName string = map (\c -> charToInt c) string
+
+-- 11.Escreva uma função que substitua vogais em uma string, conforme este esquema: a = 4, e = 3, i = 1, o = 0, u = 00.
+charToInt00 :: Char -> String
+charToInt00 c
+   | c == 'a' || c == 'A' = "4"
+   | c == 'e' || c == 'E'=  "3"
+   | c == 'i' || c == 'I' = "2"
+   | c == 'o' || c == 'O' = "1"
+   | c == 'u' || c == 'U' = "00"
+   | otherwise = [c]
+
+betterEncodeName :: String -> String
+betterEncodeName string = concatMap (\c -> charToInt00 c) string
+
+-- 12.Dada uma lista de strings, produzir outra lista com strings de 10 caracteres, usando o seguinte esquema:
+-- strings de entrada com mais de 10 caracteres são truncadas,
+-- strings com até 10 caracteres são completadas com '.' até ficarem com 10 caracteres.
+length10 :: [String] -> [String]
+length10 listString = map (\string -> 
+    if (length string) > 10
+        then (take 10 string)
+    else (take 10 (string ++ "..........")) ) listString

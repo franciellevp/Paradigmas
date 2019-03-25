@@ -1,3 +1,87 @@
+addHyphenSemLambda ""
+addHyphenSemLambda "Rio Grande do Sul"
+:load t1.hs 
+:load t1.hs 
+length10 ["palavras","paralelas","pedal","paralelepipedo"]
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+betterEncodeName "Badtz Maru"
+betterEncodeName "Anderson Silva"
+:load t1.hs 
+:load t1.hs 
+charToInt00 'U'
+charToInt00 'u'
+charToInt00 'A'
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+encodeName "Anderson Silva"
+encodeName "Badtz Maru"
+:load t1.hs 
+encodeName "Badtz Maru"
+encodeName "Anderson Silva"
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+encodeName "abc def"
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+userName "Francielle Pereira"
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+lastName "JON BON JOVI"
+:load t1.hs 
+lastName "Fran Pe dsahui"
+:load t1.hs 
+:load t1.hs 
+lastName "Francielle Pereira"
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+endBy ";" "foo;bar;baz;"
+splitOn "x" "axbxc"
+:load t1.hs 
+:load t1.hs 
+isInt "123"
+isInt "123aaa"
+isInt "aaa"
+:load t1.hs 
+:load t1.hs 
+isInt "aaa"
+isInt "123aaa"
+:load t1.hs 
+isInt "123aaa"
+isInt "aaa"
+isInt "123a"
+isInt "32132 1232"
+isInt "32132"
+:load t1.hs 
+isInt "32132"
+isInt "32132"
+isInt "32132 "
+isInt "dsada 2da 4 2014a"
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
+:load t1.hs 
 firstName "lalal aaa"
 :load t1.hs
 addHyphen "aa bb c AAA"
