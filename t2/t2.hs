@@ -14,7 +14,7 @@ greenPalette :: Int -> [(Int,Int,Int)] -- desenha as cores dos retangulos em RGB
 greenPalette n = [(0, c + i * 10, 0) | i <- [0..n], c <- take 5 (iterate (20+) 80) ]
 
 hslPalette :: Int -> [(Int,String,String)] -- desenha as cores dos circulos em HSL
-hslPalette n = [(x, "100%", "50%") | x <- take n (iterate (31+) 0) ]
+hslPalette n = [(x, "100%", "50%") | x <- take n (iterate (-31+) 448) ]
 
 -------------------------------------------------------------------------------
 -- Geração de Lista de retângulos em suas posições
