@@ -10,8 +10,11 @@ type Circle    = (Point,Float)
 rgbPalette :: Int -> [(Int,Int,Int)]
 rgbPalette n = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
 
-greenPalette :: Int -> [(Int,Int,Int)] -- desenha as cores dos retangulos em RGB
+greenPalette :: Int -> [(Int,Int,Int)] -- desenha as cores dos circulos em RGB
 greenPalette n = [(0, c + i * 10, 0) | i <- [0..n], c <- take 5 (iterate (20+) 80) ]
+
+bluePalette :: Int -> [(Int,Int,Int)] -- desenha as cores dos circulos em RGB
+bluePalette n = [(0, 0, i*0 + c) | i <- [0..2], c <- take n (iterate (10+) 80) ]
 
 hslPalette :: Int -> [(Int,String,String)] -- desenha as cores dos circulos em HSL
 hslPalette n = [(x, "100%", "50%") | x <- take n (iterate (-31+) 448) ]
@@ -30,12 +33,22 @@ genRectsInLine n = [((m*(w+gap), n*(w+gap)), w, h) | m <- [0..fromIntegral (n-1)
 -- Geração de Lista de círculos que formam um círculo
 -------------------------------------------------------------------------------
 genCirclesInCircle :: Int -> [Circle] -- bolinhas separadas por um angulo de 30 graus
-genCirclesInCircle n = [( (py + 50 * sin((graus * x) * divRad), px + 50 * cos((graus * x) * divRad) ), r ) | x <- [0..fromIntegral(n-1)]]
+genCirclesInCircle n = [( (px + 50 * sin((graus * x) * divRad), py + 50 * cos((graus * x) * divRad) ), r ) | x <- [0..fromIntegral(n-1)]]
   where r = 10 -- tamanhao do raio dos círculos
         graus = fromIntegral(360) / fromIntegral(n) -- de qts em qts graus cada bolinha vai "andar"
         divRad = pi / fromIntegral(180) -- divisão para obter angulo em radianos
         px = 100 -- coordenadas xy do circulo central
         py = 100
+
+-------------------------------------------------------------------------------
+-- Geração de Lista de círculos que formam uma curva cossenoide
+-------------------------------------------------------------------------------
+genCirclesInCurve :: Int -> [Circle] -- bolinhas separadas por um angulo de 30 graus
+genCirclesInCurve n = [(( 0 * y + x, py * y + 35 * cos((graus * x) * divRad) ), r) | y <- [1..3], x <- take n (iterate (30+) 80)]
+  where r = 20 -- tamanhao do raio dos círculos
+        graus = fromIntegral(360) / fromIntegral(n) -- de qts em qts graus cada bolinha vai "andar"
+        divRad = pi / fromIntegral(180) -- divisão para obter angulo em radianos
+        py = 100 -- coordenadas xy do circulo central
 
 -------------------------------------------------------------------------------
 -- Strings SVG
@@ -99,4 +112,14 @@ genCase2 = do
         circles = genCirclesInCircle nCircles
         palette = hslPalette nCircles
         nCircles = 12 -- nro de círculos
+        (w,h) = (1500,500) -- width,height da imagem SVG
+
+genCase3 :: IO ()
+genCase3 = do
+  writeFile "case3.svg" $ svgstrs
+  where svgstrs = svgBegin w h ++ svgfigs ++ svgEnd -- tam da img svg + toda a string da figura + svgEnd
+        svgfigs = svgElements svgCirc circles (map svgStyle palette)
+        circles = genCirclesInCurve nCircles
+        palette = bluePalette nCircles
+        nCircles = 14 -- nro de círculos
         (w,h) = (1500,500) -- width,height da imagem SVG
