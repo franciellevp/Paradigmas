@@ -13,8 +13,14 @@ rgbPalette n = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
 greenPalette :: Int -> [(Int,Int,Int)] -- desenha as cores dos circulos em RGB
 greenPalette n = [(0, c + i * 10, 0) | i <- [0..n], c <- take 5 (iterate (20+) 80) ]
 
-bluePalette :: Int -> [(Int,Int,Int)] -- desenha as cores dos circulos em RGB
-bluePalette n = [(0, 0, i*0 + c) | i <- [0..2], c <- take n (iterate (10+) 80) ]
+bluePalette :: Int -> [(Int,Int,Int)]
+bluePalette n = [(0, 0, c) | c <- take n (iterate (10+) 80) ]
+
+redPalette :: Int -> [(Int,Int,Int)] -- desenha as cores dos circulos em RGB
+redPalette n = [(c, 0, 0) | c <- take n (iterate (10+) 80) ]
+
+greenPalette2 :: Int -> [(Int,Int,Int)] -- desenha as cores dos circulos em RGB
+greenPalette2 n = [(0, c, 0) | c <- take n (iterate (10+) 80) ]
 
 hslPalette :: Int -> [(Int,String,String)] -- desenha as cores dos circulos em HSL
 hslPalette n = [(x, "100%", "50%") | x <- take n (iterate (-31+) 448) ]
@@ -44,11 +50,12 @@ genCirclesInCircle n = [( (px + 50 * sin((graus * x) * divRad), py + 50 * cos((g
 -- Geração de Lista de círculos que formam uma curva cossenoide
 -------------------------------------------------------------------------------
 genCirclesInCurve :: Int -> [Circle] -- bolinhas separadas por um angulo de 30 graus
-genCirclesInCurve n = [(( 0 * y + x, py * y + 35 * cos((graus * x) * divRad) ), r) | y <- [1..3], x <- take n (iterate (30+) 80)]
+genCirclesInCurve n = [(( 0 * y + x, px * y - a * cos((graus + x) * divRad) ), r) | y <- [1..3], x <- take n (iterate (30+) 80)]
   where r = 20 -- tamanhao do raio dos círculos
         graus = fromIntegral(360) / fromIntegral(n) -- de qts em qts graus cada bolinha vai "andar"
         divRad = pi / fromIntegral(180) -- divisão para obter angulo em radianos
-        py = 100 -- coordenadas xy do circulo central
+        px = 100 -- distancia entre as ondas
+        a = 50 -- amplitude da onda
 
 -------------------------------------------------------------------------------
 -- Strings SVG
@@ -114,12 +121,12 @@ genCase2 = do
         nCircles = 12 -- nro de círculos
         (w,h) = (1500,500) -- width,height da imagem SVG
 
-genCase3 :: IO ()
-genCase3 = do
-  writeFile "case3.svg" $ svgstrs
+genCase4 :: IO ()
+genCase4 = do
+  writeFile "case4.svg" $ svgstrs
   where svgstrs = svgBegin w h ++ svgfigs ++ svgEnd -- tam da img svg + toda a string da figura + svgEnd
         svgfigs = svgElements svgCirc circles (map svgStyle palette)
         circles = genCirclesInCurve nCircles
-        palette = bluePalette nCircles
+        palette = redPalette nCircles ++ greenPalette2 nCircles ++ bluePalette nCircles
         nCircles = 14 -- nro de círculos
         (w,h) = (1500,500) -- width,height da imagem SVG
