@@ -47,6 +47,19 @@ genCirclesInCircle n = [( (px + 50 * sin((graus * x) * divRad), py + 50 * cos((g
         py = 100
 
 -------------------------------------------------------------------------------
+-- Geração de Lista de círculos interligados em forma de retângulo
+-------------------------------------------------------------------------------
+genCirclesInRect :: Int -> [Circle]
+genCirclesInRect n  = [((gap*sin((i*g) * rad) + gap2*j + r*2, k*gap2 + gap * (-cos((i*g) * rad)) + r*2),r) | k <- [0..sndLast], j <- [0..last],i <- [0..last]]
+  where gap = r / 2 + 8
+        gap2 = r * 4
+        r = 30 
+        sndLast = fromIntegral(n-2)
+        last = fromIntegral(n-1) 
+        rad =  pi / fromIntegral(180)
+        g = fromIntegral(360) / fromIntegral(n)
+
+-------------------------------------------------------------------------------
 -- Geração de Lista de círculos que formam uma curva cossenoide
 -------------------------------------------------------------------------------
 genCirclesInCurve :: Int -> [Circle] -- bolinhas separadas por um angulo de 30 graus
@@ -119,6 +132,16 @@ genCase2 = do
         circles = genCirclesInCircle nCircles
         palette = hslPalette nCircles
         nCircles = 12 -- nro de círculos
+        (w,h) = (1500,500) -- width,height da imagem SVG
+
+genCase3 :: IO ()
+genCase3 = do
+  writeFile "case3.svg" $ svgstrs
+  where svgstrs = svgBegin w h ++ svgfigs ++ svgEnd
+        svgfigs = svgElements svgCirc circs (map svgStyle palette)
+        circs = genCirclesInRect nCircs
+        palette = rgbPalette (nCircs*6)
+        nCircs = 3
         (w,h) = (1500,500) -- width,height da imagem SVG
 
 genCase4 :: IO ()
