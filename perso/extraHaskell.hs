@@ -1,7 +1,30 @@
 import Control.Monad
-
 -- Problema 1: Primo Rápido
 -- Descrição: https://www.urionlinejudge.com.br/judge/pt/problems/view/1221
+-- Sieve of Eratosthenes
+isPrime :: Int -> String
+isPrime n
+  | n <= 2 = "Prime"
+  | otherwise = if odd n && func 3 then "Prime" else "Not Prime"
+  where
+    func factor
+      | factor > upperLim = True
+      | otherwise = n `mod` factor /= 0 && func (factor+2)
+      where
+        upperLim = (floor.sqrt.fromIntegral) n 
+
+primoRapido :: IO()
+primoRapido = do 
+    line1 <- getLine
+    let nCases = (read line1 :: Int)
+    if(nCases >= 1 && nCases <= 200)
+        then forM_ [1..nCases] $ \_ -> do
+                line2 <- getLine
+                let n = read line2 :: Int
+                if(n >= 1 && n <= 2^31)
+                    then putStrLn $ isPrime n
+                    else putStrLn ""
+        else putStrLn ""
 
 -- Problema2: Trigo no Tabuleiro
 -- Descrição: https://www.urionlinejudge.com.br/judge/pt/problems/view/1169
