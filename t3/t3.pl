@@ -1,6 +1,5 @@
 % Ex 1
-odd(N) :- mod(N, 2) \= 0 .
-
+odd(N) :- mod(N, 2) =\= 0 .
 
 % Ex 2
 hasN([],0).
@@ -10,19 +9,25 @@ hasN([_|T],N) :-
   hasN(T, I) .
 
 % Ex 3
-inc99([], _).
-inc99([H,T], L2) :-
-  R is H+99,
-  L2 = [R|T].
+inc99([], []).
+inc99([H|T], [C|R]) :- 
+    inc99(T, R), 
+    C is H + 99.
 
 % Ex 4
-incN([], _, _).
-incN([H|T], L2, _) :-
-  R is H+99,
-  L2 = [R|T].
+incN([], [], _).
+incN([H|T], [C|R], N) :- 
+    incN(T, R, N), 
+    C is H + N.
 
 % Ex 5
 comment([], []).
-comment([H|T], L2) :-
-  atom_concat("%%", H, R),
-  L2 = [R|T].
+comment([H|T], [C|R]) :- 
+    comment(T, R), 
+	atom_concat("%%", H, C).
+
+onlyEven([], []).
+onlyEven([H|T], L) :- odd(H), onlyEven(T, L).
+onlyEven([H|T], [H|R]) :- 
+    mod(H, 2) =:= 0,
+    onlyEven(T, R).
