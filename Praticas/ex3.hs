@@ -46,8 +46,28 @@ trSpaces str = [if (c == ' ') then '-' else c | c <- str]
 -- 1) x -> [2, 4], x = 2, y -> [3, 5]
 -- 2) x -> [2, 4], x = 4, y -> [5]
 
+-- ex11. seleciona somente os segundos elementos de uma lista de tuplas
+selectSnd :: [(Int,Int)] -> [Int]
+selectSnd list = [snd x | x <- list]
+
+-- ex13. calcula o somatório dos produtos dos pares de elementos de duas listas
+dotProd :: [Int] -> [Int] -> Int
+dotProd l1 l2 = sumProdTuples $ zip l1 l2
+
+-- multiplica os elementos de cada tuple e soma todos os resultados
+-- [(1,2),(3,4)] = 1*2 + 3*4
+sumProdTuples :: [(Int, Int)] -> Int
+sumProdTuples list = sum $ [x * y | (x, y) <- list]
+
+-- ex14. recebe um número N e um ponto (x,y) e gera uma sequência de N retângulos não sobrepostos
+genRects :: Int -> (Int,Int) -> [(Float, Float, Float, Float)]
+genRects n (x, y) = [(m * (fromIntegral(x) + w), fromIntegral y, w, h) | m <- [0..fromIntegral(n-1)]]
+    where (w, h) = (5.5::Float, 5.5) -- determina dimensões (width e height) dos retângulos 5.5 X 5.5 
 
 
+-- ex15. ex13 usando zipWith
+dotProd' :: [Int] -> [Int] -> Int
+dotProd' l1 l2 = sum $ zipWith (*) l1 l2
 
 
 
