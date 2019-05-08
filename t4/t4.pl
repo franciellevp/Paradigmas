@@ -64,8 +64,13 @@ sexta(alice, apartamento).
 sexta(bernardo, apartamento).
 sexta(maria, apartamento).
 
-acesso(X) :- 
-    (bastao(X) ; martelo(X)),
+acesso(X, Y, D) :- 
+    (
+    bastao(X, D),
+    	Y = bastao ; 
+    martelo(X, D),
+        Y = martelo
+    ),
     chave(X),
     presenteCrime(X).
 
@@ -98,13 +103,17 @@ chave(P) :-
     terca(P, portoAlegre) .
 
 % O bastão de baseball que foi roubado do amigo pobre de Anita, Bernardo, na quinta-feira em Porto Alegre ou na quarta-feira em Santa Maria
-bastao(P) :-
-    quinta(P, portoAlegre);
-    quarta(P, santaMaria) .
+bastao(P, D) :-
+    quinta(P, portoAlegre),
+    D = quinta;
+    quarta(P, santaMaria),
+    D = quarta.
 
 % O martelo que foi roubado da caixa de ferramentas do apartamento na quarta ou na quinta-feira.
-martelo(P) :-
-    quarta(P, apartamento) ;
-    quinta(P, apartamento).
+martelo(P, D) :-
+    quarta(P, apartamento),
+    D = quarta;
+    quinta(P, apartamento),
+    D = quinta.
 
-assassino(Pessoa, Motivo) :- motivo(Pessoa, Motivo), acesso(Pessoa).
+assassino(Pessoa, Motivo, Arma, Dia) :- motivo(Pessoa, Motivo), acesso(Pessoa, Arma, Dia).
