@@ -64,8 +64,12 @@ sexta(alice, apartamento).
 sexta(bernardo, apartamento).
 sexta(maria, apartamento).
 
-acesso(X) :- 
-    (bastao(X) ; martelo(X)),
+acesso(X, Y) :- (
+        bastao(X),
+        Y = bastao ; 
+        martelo(X) ,
+        Y = martelo
+    ),
     chave(X),
     presenteCrime(X).
 
@@ -107,4 +111,4 @@ martelo(P) :-
     quarta(P, apartamento) ;
     quinta(P, apartamento).
 
-assassino(Pessoa, Motivo) :- motivo(Pessoa, Motivo), acesso(Pessoa).
+assassino(Pessoa, Motivo, Arma) :- motivo(Pessoa, Motivo), acesso(Pessoa, Arma).
