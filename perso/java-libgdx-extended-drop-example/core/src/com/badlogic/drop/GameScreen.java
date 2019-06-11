@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
 	SpriteBatch batch;
 	Rectangle bucket;
 	Vector3 touchPos;
-	Array<Rectangle> raindrops;
+	Array<DropImage> raindrops;
 	long lastDropTime;
 	int dropsGathered;
 	int missDrops;
@@ -38,7 +38,6 @@ public class GameScreen implements Screen {
 		game = passed_game; 
 		
 		// Load images, 64px each
-		dropImage = new Texture(Gdx.files.internal("droplet.png"));
 		bucketImage = new Texture(Gdx.files.internal("bucket.png"));
 		
 		// Load the drop sfx and the rain background music
@@ -64,7 +63,7 @@ public class GameScreen implements Screen {
 		bucket.height = 64;
 		
 		// Create Raindrops and spawn the first one.
-		raindrops = new Array<Rectangle>();
+		raindrops = new Array<DropImage>();
 		spawnRaindrop();
 	}
 
@@ -81,11 +80,12 @@ public class GameScreen implements Screen {
 		game.batch.begin();
 		game.font.draw(game.batch, "Drops Collected: " + dropsGathered, 0, 400);
 		game.font.draw(game.batch, "Drops Missed: " + missDrops, 0, 360);
-		
+
 		// Draw the bucket and all the drops.
 		game.batch.draw(bucketImage, bucket.x, bucket.y);
-		for (Rectangle raindrop: raindrops) {
-			game.batch.draw(dropImage, raindrop.x, raindrop.y);
+		for (DropImage raindrop: raindrops) {
+			System.out.println("X " + raindrop.getX() + " Y " + raindrop.getY());
+			game.batch.draw(raindrop.getTexture(), raindrop.getX(), raindrop.getY());
 		}
 		game.batch.end();
 		
@@ -111,11 +111,11 @@ public class GameScreen implements Screen {
 			spawnRaindrop();
 		
 		// Update all the raindrops
-		Iterator<Rectangle> iter = raindrops.iterator();
+		Iterator<DropImage> iter = raindrops.iterator();
 		while (iter.hasNext()) {
-			Rectangle raindrop = iter.next();
-			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-			if (raindrop.y + raindrop.height < 0) {
+			DropImage raindrop = iter.next();
+			raindrop.setY(200 * Gdx.graphics.getDeltaTime());
+			if (raindrop.getY() + raindrop.getHeight() < 0) {
 				missDrops++;
 				iter.remove();
 			}
@@ -128,26 +128,21 @@ public class GameScreen implements Screen {
 	}
 	
 	private void spawnRaindrop() {
-		int rand = randomNumber(0, 2);	
-			System.out.println(rand);
-			switch ((rand)) {
-				case 0:
-					dropImage = new Texture(Gdx.files.internal("droplet.png"));
-					break;
-				case 1:
-					dropImage = new Texture(Gdx.files.internal("apple.png"));
-					break;
-				case 2:
-					dropImage = new Texture(Gdx.files.internal("pear.png"));
-					break;
-				default:
-					break;
-			}
-		Rectangle raindrop = new Rectangle();
-		raindrop.x = MathUtils.random(0, 800-64);
-		raindrop.y = 480;
-		raindrop.width = 64;
-		raindrop.height = 64;
+		int rand = MathUtils.random(0, 2);
+		switch ((rand)) {
+			case 0:
+				dropImage = new Texture(Gdx.files.internal("droplet.png"));
+				break;
+			case 1:
+				dropImage = new Texture(Gdx.files.internal("apple.png"));
+				break;
+			case 2:
+				dropImage = new Texture(Gdx.files.internal("pear.png"));
+				break;
+			default:
+				break;
+		}
+		DropImage raindrop = new DropImage(dropImage, 64, 64, MathUtils.random(0, 800-64), 480);
 		raindrops.add(raindrop);
 		lastDropTime = TimeUtils.nanoTime();
 	}
@@ -155,7 +150,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void dispose() {
 		// Clear all the "native" resources
-		dropImage.dispose();
+		//dropImage.dispose();
 		bucketImage.dispose();
 		dropSound.dispose();
 		rainMusic.dispose();
@@ -189,9 +184,5 @@ public class GameScreen implements Screen {
 	public void resume() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	private int randomNumber(int min, int max) {
-	   return (int)(Math.random() * ((max - min) + 1)) + min;
 	}
 }
