@@ -1,4 +1,4 @@
-package randompicker.Models;
+package Models;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,25 +6,25 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class Model {
-
+public class RandomPickerModel {
     private String fileName;
     private ArrayList<String> elements;
-    
-    public Model() {
+
+    public RandomPickerModel() {
         this.fileName = "";
         this.elements = new ArrayList<>();
     }
-    
-    public Model(String fileName) {
+
+    public RandomPickerModel(String fileName) {
         this.fileName = fileName;
         this.elements = new ArrayList<>();
     }
 
-    public Model(String fileName, ArrayList<String> elements) {
+    public RandomPickerModel(String fileName, ArrayList<String> elements) {
         this.fileName = fileName;
         this.elements = elements;
     }
@@ -48,7 +48,7 @@ public class Model {
     public void ReadFileContent(String fileName) {
         try {
             String path = (new File(fileName)).getAbsolutePath().replace(fileName, "");
-            path +=  "src/randompicker/" + fileName;
+            path += "src/random/" + fileName;
 
             BufferedReader br = new BufferedReader(new FileReader(path));
             String line;
@@ -61,24 +61,25 @@ public class Model {
             System.out.println("Erro ao abrir o arquivo " + fileName);
         }
     }
-    
+
     public void ShowFileContent() {
-        System.out.println("\nElementos");
         elements.forEach((element) -> {
             System.out.println(element);
         });
     }
-    
+
     public void ShuffleOff() {
         Collections.shuffle(elements);
     }
-    
+
     public String GetNextElement() {
-        if(elements.isEmpty()) return null;
+        if (elements.isEmpty()) {
+            return null;
+        }
         String element = elements.remove(0);
         return element;
     }
-    
+
     public File OpenFileChooser(Stage stage, FileChooser fileChooser) {
         try {
             fileChooser.setTitle("Abrir Arquivo");
@@ -90,5 +91,11 @@ public class Model {
             System.out.println("Erro ao abrir o arquivo");
             return null;
         }
+    }
+    
+    public void FillTextArea(TextArea textArea) {
+        elements.forEach((element) -> {
+            textArea.appendText(element + "\n");
+        });
     }
 }
