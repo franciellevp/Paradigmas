@@ -4,6 +4,7 @@ import Models.RandomPickerModel;
 import Views.RandomPickerView;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
@@ -24,24 +25,31 @@ public class RandomPickerController {
     public void AppCmd() {
         try {
             model.ReadFileContent(model.getFileName());
-            if (model.getElements().size() > 0) {
-                model.ShowFileContent();
+            if (model.getElements().size() > 0) {  
+                ArrayList<String> list = model.ShuffleRandom();
+                System.out.println("Elementos Embaralhados no random.org");
+                PrintListContent(list);
+                
                 model.ShuffleOff();
-                model.ShowFileContent();
-
-                String element = "";
-                while (element != null) {
-                    int key = System.in.read();
-                    if (key == 10) {
-                        element = model.GetNextElement();
-                        if (element != null) {
-                            System.out.print(element);
-                        }
-                    }
-                }
+                System.out.println("\nElementos Embaralhados Offline");
+                PrintListContent(model.getElements());
             }
         } catch (IOException ex) {
             Logger.getLogger(RandomPickerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void PrintListContent(ArrayList<String> list) throws IOException {
+        model.setIndex(0);
+        String element = "";
+        while (element != null) {
+            int key = System.in.read();
+            if (key == 10) {
+                element = model.GetNextElement(list);
+                if (element != null) {
+                    System.out.print(element);
+                }
+            }
         }
     }
 
@@ -82,7 +90,7 @@ public class RandomPickerController {
     public void ShowListElementsLabel() {
         view.getBtnNext().setOnAction((ActionEvent) -> {
             String element = "";
-            element = model.GetNextElement();
+            element = model.GetNextElement(model.getElements());
             if (element != null) {
                 text = text.concat(element + "\n");
                 view.setLabel(text);

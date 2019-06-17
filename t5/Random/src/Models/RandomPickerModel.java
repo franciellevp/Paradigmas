@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.control.TextArea;
@@ -11,12 +14,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class RandomPickerModel {
+
     private String fileName;
     private ArrayList<String> elements;
+    private int index;
 
     public RandomPickerModel() {
         this.fileName = "";
         this.elements = new ArrayList<>();
+        this.index = 0;
     }
 
     public RandomPickerModel(String fileName) {
@@ -62,7 +68,7 @@ public class RandomPickerModel {
         }
     }
 
-    public void ShowFileContent() {
+    public void ShowListContent() {
         elements.forEach((element) -> {
             System.out.println(element);
         });
@@ -72,11 +78,57 @@ public class RandomPickerModel {
         Collections.shuffle(elements);
     }
 
-    public String GetNextElement() {
-        if (elements.isEmpty()) {
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public ArrayList<String> ShuffleRandom() {
+        try {
+            String urlstr = "https://www.random.org/lists/?mode=advanced";
+            URL url = new URL(urlstr);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "Mozilla/5.0");
+            con.setDoOutput(true);
+
+            String data = "list=";
+            String element = "";
+            while (element != null) {
+                element = GetNextElement(elements);
+                if (element != null) {
+                    data = data.concat(element + "%0D%0A");
+                }
+            }
+            data = data.concat("&format=plain&rnd=new");
+            System.out.println(data);
+            con.getOutputStream().write(data.getBytes("UTF-8")); // Envia dados pela conexão aberta
+
+            // Cria objeto que fará leitura da resposta pela conexão aberta
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+
+            // Lê resposta, linha por linha
+            String responseLine;
+            int i = 0;
+            ArrayList<String> list = new ArrayList<>();
+            while ((responseLine = in.readLine()) != null) {
+                list.add(responseLine);
+            }
+            in.close();
+            return list;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao conectar-se ao Random.org");
             return null;
         }
-        String element = elements.remove(0);
+    }
+
+    public String GetNextElement(ArrayList<String> list) {
+        if (index == list.size()) {
+            return null;
+        }
+        String element = list.get(index);
+        index++;
         return element;
     }
 
@@ -92,7 +144,7 @@ public class RandomPickerModel {
             return null;
         }
     }
-    
+
     public void FillTextArea(TextArea textArea) {
         elements.forEach((element) -> {
             textArea.appendText(element + "\n");
