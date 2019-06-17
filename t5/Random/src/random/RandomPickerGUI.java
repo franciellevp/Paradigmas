@@ -23,6 +23,7 @@ public class RandomPickerGUI extends Application {
         controller.OpenAboutWindow();
         controller.OpenFileChooserWindow();
         controller.ShuffleList();
+        controller.ShuffleListRandom();
         controller.ShowListElementsLabel();
     }
 }

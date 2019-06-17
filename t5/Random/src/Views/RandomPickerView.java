@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ public class RandomPickerView {
     final FileChooser fileChooser = new FileChooser();
     final Text aboutText = new Text();
     final Button btnShuffle = new Button("Shuffle");
+    final Button btnRandom = new Button("Shuffle Random.org");
     final Button btnNext = new Button("Next");
     private final Label label = new Label("");
     private Stage stage = new Stage();
@@ -71,6 +73,10 @@ public class RandomPickerView {
     public void setLabel(String text) {
         this.label.setText(text);
     }
+
+    public Button getBtnRandom() {
+        return btnRandom;
+    }    
     
     public void DrawView() {
         menuBar.getMenus().addAll(menuFile, menuHelp); // desenha a barra de menu
@@ -79,13 +85,16 @@ public class RandomPickerView {
 
         textArea.setPrefWidth((double) 400); // set TextArea Height
         menuBar.setStyle("-fx-background-color: #4682B4; -fx-color: red;");
-        
+        HBox pane = new HBox();
+        pane.getChildren().add(btnShuffle);
+        pane.getChildren().add(btnRandom);
+    
         BorderPane.setAlignment(menuBar, Pos.TOP_CENTER);
         BorderPane.setAlignment(textArea, Pos.BOTTOM_CENTER);
-        BorderPane.setAlignment(btnShuffle, Pos.CENTER_LEFT);
+        BorderPane.setAlignment(pane, Pos.CENTER_LEFT);
         BorderPane.setAlignment(btnNext, Pos.CENTER_RIGHT);
         
-        BorderPane root = new BorderPane(label, menuBar, btnNext, textArea, btnShuffle);
+        BorderPane root = new BorderPane(label, menuBar, btnNext, textArea, pane);
         root.setPrefSize(800, 600);        // width e height da VBox
         root.setStyle("-fx-padding: 6; -fx-background-color: snow;"); // Set the Style-properties of the BorderPane
 

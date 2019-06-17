@@ -5,12 +5,13 @@ import Views.RandomPickerView;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-public class RandomPickerController {
+public class RandomPickerController extends RandomPickerModel{
 
     private final RandomPickerModel model;
     private final RandomPickerView view;
@@ -26,26 +27,26 @@ public class RandomPickerController {
         try {
             model.ReadFileContent(model.getFileName());
             if (model.getElements().size() > 0) {  
-                ArrayList<String> list = model.ShuffleRandom();
+                model.ShuffleRandom();
                 System.out.println("Elementos Embaralhados no random.org");
-                PrintListContent(list);
+                PrintListContent();
                 
                 model.ShuffleOff();
                 System.out.println("\nElementos Embaralhados Offline");
-                PrintListContent(model.getElements());
+                PrintListContent();
             }
         } catch (IOException ex) {
             Logger.getLogger(RandomPickerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void PrintListContent(ArrayList<String> list) throws IOException {
+    private void PrintListContent() throws IOException {
         model.setIndex(0);
         String element = "";
         while (element != null) {
             int key = System.in.read();
             if (key == 10) {
-                element = model.GetNextElement(list);
+                element = model.GetNextElement(model.getElements());
                 if (element != null) {
                     System.out.print(element);
                 }
@@ -82,7 +83,22 @@ public class RandomPickerController {
 
     public void ShuffleList() {
         view.getBtnShuffle().setOnAction((ActionEvent) -> {
+            GetTextAreaContent();
             model.ShuffleOff();
+            view.setLabel("");
+            model.setIndex(0);
+            this.text = "";
+            this.ShowSuccessMessage();
+        });
+    }
+    
+     public void ShuffleListRandom() {
+        view.getBtnRandom().setOnAction((ActionEvent) -> {
+            GetTextAreaContent();
+            model.ShuffleRandom();
+            view.setLabel("");
+            model.setIndex(0);
+            this.text = "";
             this.ShowSuccessMessage();
         });
     }
@@ -96,5 +112,13 @@ public class RandomPickerController {
                 view.setLabel(text);
             }
         });
+    }
+    
+    public void GetTextAreaContent() {
+        String str = view.getTextArea().getText();
+        String[] array = str.split("\n");
+        ArrayList<String> list = new ArrayList<>();
+        list.addAll(Arrays.asList(array));
+        model.setElements(list);
     }
 }
