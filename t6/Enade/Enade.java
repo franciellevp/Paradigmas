@@ -1,4 +1,4 @@
-package random;
+package Enade;
 
 import Views.EnadeView;
 import Controllers.EnadeController;
@@ -7,7 +7,7 @@ import Models.EnadeModel;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class EnadeGUI extends Application {
+public class Enade extends Application {
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -21,6 +21,5 @@ public class EnadeGUI extends Application {
         EnadeController controller = new EnadeController(model, view);
         controller.CloseApp();
         controller.OpenAboutWindow();
-        controller.ShuffleList();
     }
 }
