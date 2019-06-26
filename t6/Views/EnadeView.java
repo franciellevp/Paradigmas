@@ -10,6 +10,7 @@ public class EnadeView {
 
     private Stage stage = new Stage();
     private final MenuView menu = new MenuView();
+    private final EnadeTableView table = new EnadeTableView();
 
     public EnadeView(Stage stage) {
         this.stage = stage;
@@ -25,10 +26,13 @@ public class EnadeView {
     
     public void DrawView() {
         menu.DrawMenu();
+        table.DrawTableView();
         BorderPane.setAlignment(menu.getMenu(), Pos.TOP_CENTER);
+        BorderPane.setAlignment(table.getTable(), Pos.CENTER);
         
         BorderPane root = new BorderPane();
         root.setTop(menu.getMenu());
+        root.setCenter(table.getTable());
         root.setPrefSize(Constants.WIDTH, Constants.HEIGHT);
         root.setStyle("-fx-padding: 6; -fx-background-color: snow;"); // Set the Style-properties of the BorderPane
 
@@ -36,6 +40,5 @@ public class EnadeView {
         stage.setScene(scene);                  // Add the scene to the Stage
         stage.setTitle("ENADE UFSM Explorer");  // Set the title of the Stage
         stage.show();                           // Display the Stage
-
     } 
 }

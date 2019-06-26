@@ -21,5 +21,6 @@ public class Enade extends Application {
         EnadeController controller = new EnadeController(model, view);
         controller.CloseApp();
         controller.OpenAboutWindow();
+        controller.OpenEnadeModal();
     }
 }

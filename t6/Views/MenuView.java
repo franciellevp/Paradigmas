@@ -25,6 +25,14 @@ public class MenuView {
         return subMenuAbout;
     }
     
+    public MenuItem getSubMenuReload() {
+        return subMenuReload;
+    }
+    
+    public MenuItem getSubMenuSource() {
+        return subMenuSource;
+    }
+    
     public void DrawMenu() {
         menuBar.getMenus().addAll(menuFile, menuHelp);                          // desenha a barra de menu
         menuFile.getItems().addAll(subMenuReload, subMenuSource, subMenuExit); // add subMenu no menu File

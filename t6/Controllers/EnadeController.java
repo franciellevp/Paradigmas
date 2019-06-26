@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.EnadeModel;
+import Views.EnadeInfoModal;
 import Views.EnadeView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -26,6 +27,14 @@ public class EnadeController extends EnadeModel{
             String msg = "ENADE UFSM Explorer\nFrancielle Vasconcellos Pereira\nCopyright 2019 - Todos os direitos reservados.";
             Alert alert = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);
             alert.show();
+        });
+    }
+    
+    public void OpenEnadeModal() {
+        view.getMenu().getSubMenuReload().setOnAction((ActionEvent) -> {
+            System.out.println("ABRE MODAL PFVR");
+            EnadeInfoModal modal = new EnadeInfoModal(view.getStage());
+            modal.DrawModal();
         });
     }
 
