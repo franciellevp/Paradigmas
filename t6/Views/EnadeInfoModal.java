@@ -21,7 +21,7 @@ public class EnadeInfoModal {
         pane.getChildren().add(swingNode);
 
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Swing in JavaFX");
+        stage.setTitle("ENADE");
         stage.setScene(new Scene(pane, 250, 150));
         stage.show();
     }

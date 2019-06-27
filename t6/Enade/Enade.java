@@ -3,6 +3,7 @@ package Enade;
 import Views.EnadeView;
 import Controllers.EnadeController;
 import Models.EnadeModel;
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -14,7 +15,7 @@ public class Enade extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         EnadeView view = new EnadeView(stage);
         view.DrawView();
         EnadeModel model = new EnadeModel();
