@@ -1,6 +1,5 @@
 package Models;
 
-
 public class TableRowEnade {
     private int Id;
     private int IdQuestao;

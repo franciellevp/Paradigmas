@@ -1,21 +1,15 @@
-package Enade;
+package enade.enade;
 
-import Views.EnadeView;
 import Controllers.EnadeController;
 import Models.EnadeModel;
-import java.io.IOException;
-
+import Views.EnadeView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Enade extends Application {
-
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
+public class MainApp extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws Exception {
         EnadeView view = new EnadeView(stage);
         view.DrawView();
         EnadeModel model = new EnadeModel();
@@ -24,5 +18,12 @@ public class Enade extends Application {
         controller.OpenAboutWindow();
         controller.OpenEnadeModal();
         controller.LoadTableView();
+        controller.ReloadTableData();
+        controller.ChangeDefaultURL();
     }
+
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
+
 }

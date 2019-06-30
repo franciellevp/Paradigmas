@@ -1,6 +1,7 @@
 package Views;
 
-import Enade.Constants;
+import Utils.Constants;
+import java.io.IOException;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -24,11 +25,14 @@ public class EnadeView {
         return menu;
     }
     
-    public void DrawView() {
+    public void DrawView() throws IOException {
         menu.DrawMenu();
         table.DrawTableView();
         BorderPane.setAlignment(menu.getMenu(), Pos.TOP_CENTER);
         BorderPane.setAlignment(table.getTable(), Pos.CENTER);
+        
+        
+        //Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
         
         BorderPane root = new BorderPane();
         root.setTop(menu.getMenu());
@@ -36,9 +40,10 @@ public class EnadeView {
         root.setPrefSize(Constants.WIDTH, Constants.HEIGHT);
         root.setStyle("-fx-padding: 6; -fx-background-color: snow;"); // Set the Style-properties of the BorderPane
 
-        Scene scene = new Scene(root);          // Create the Scene        
-        stage.setScene(scene);                  // Add the scene to the Stage
-        stage.setTitle("ENADE UFSM Explorer");  // Set the title of the Stage
-        stage.show();                           // Display the Stage
+        Scene scene = new Scene(root);                      // Create the Scene
+        scene.getStylesheets().add("/styles/Styles.css");   // Add all the Styles 
+        stage.setScene(scene);                              // Add the scene to the Stage
+        stage.setTitle("ENADE UFSM Explorer");              // Set the title of the Stage
+        stage.show();                                       // Display the Stage
     } 
 }
