@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 public class EnadeModel {
+    private String urlCC;
 
     public EnadeModel(String urlCC) {
         this.urlCC = urlCC;
@@ -20,8 +21,6 @@ public class EnadeModel {
     public EnadeModel() {
         this.urlCC = Constants.DEFAULT_URL_CC;
     }
-
-    private String urlCC;
 
     public String getUrlCC() {
         return urlCC;

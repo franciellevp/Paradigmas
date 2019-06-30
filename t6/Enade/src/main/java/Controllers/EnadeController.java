@@ -2,8 +2,7 @@ package Controllers;
 
 import Utils.Constants;
 import Models.EnadeModel;
-import Views.EnadeTableView;
-import Views.EnadeView;
+import Views.*;
 import java.io.File;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -11,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.stage.WindowEvent;
 
 public class EnadeController extends EnadeModel {
 
@@ -19,6 +17,7 @@ public class EnadeController extends EnadeModel {
     private final EnadeModel model;
     @FXML
     private final EnadeView view;
+    private final ChangeUrlView urlView = new ChangeUrlView();
 
     public EnadeController(EnadeModel model, EnadeView view) {
         this.model = model;
@@ -59,8 +58,8 @@ public class EnadeController extends EnadeModel {
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                EnadeModel modal = new EnadeModel();
-                modal.ReadCSVFile();
+                model.GetFileCSV();
+                model.ReadCSVFile();
             }
         };
         view.getMenu().getSubMenuReload().setOnAction(event);
@@ -68,10 +67,18 @@ public class EnadeController extends EnadeModel {
 
     @FXML
     public void ChangeDefaultURL() {
+        final EventHandler<ActionEvent> newUrlEvent = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                GetTextContent();
+            }
+        };
+
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("muda url");
+                urlView.DrawURLView();
+                urlView.getSendButton().setOnAction(newUrlEvent);
             }
         };
         view.getMenu().getSubMenuSource().setOnAction(event);
@@ -93,6 +100,17 @@ public class EnadeController extends EnadeModel {
         } else {
             System.out.println("Abaixa aqui");
             model.GetFileCSV();
+        }
+    }
+
+    public void GetTextContent() {
+        String str = urlView.getNewURL().getText();
+        if (str.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Por favor, insira uma URL", ButtonType.OK);
+            alert.show();
+        } else {
+            model.setUrlCC(str);
+            ShowSuccessMessage();
         }
     }
 }
