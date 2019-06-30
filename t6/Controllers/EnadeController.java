@@ -1,8 +1,11 @@
 package Controllers;
 
+import Enade.Constants;
 import Models.EnadeModel;
 import Views.EnadeInfoModal;
+import Views.EnadeTableView;
 import Views.EnadeView;
+import java.io.File;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -32,7 +35,6 @@ public class EnadeController extends EnadeModel{
     
     public void OpenEnadeModal() {
         view.getMenu().getSubMenuReload().setOnAction((ActionEvent) -> {
-            System.out.println("ABRE MODAL PFVR");
             EnadeInfoModal modal = new EnadeInfoModal(view.getStage());
             modal.DrawModal();
         });
@@ -41,5 +43,16 @@ public class EnadeController extends EnadeModel{
     public void ShowSuccessMessage() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Operação realizada com sucesso.", ButtonType.OK);
         alert.show();
+    }
+    
+    public void LoadTableView() {
+        File file = new File(Constants.FILEPATH);
+        if(model.CheckFileExist(file)) {
+            EnadeTableView tableView = new EnadeTableView();
+            tableView.LoadTableView();
+        } else {
+            System.out.println("Abaixa aqui");
+            model.GetFileCSV();
+        }
     }
 }

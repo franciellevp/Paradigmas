@@ -46,7 +46,7 @@ public class EnadeTableView {
         
         questao.setCellFactory(TextFieldTableCell.forTableColumn());
         
-        table.setItems(listaDeObjetos());
+        LoadTableView();
         
         table.getColumns().addAll(selected, ano, prova, tipo, idQuestao, questao, objeto, acertoCurso, acertoRegiao, acertoBr, diferenca);
     }
@@ -56,6 +56,10 @@ public class EnadeTableView {
             new TableRowEnade(1, 1, 2019, "Tipo", "Desc Questão", "Objeto", "Provinha", 22.4, 22.4, 22.4, -9),
                 new TableRowEnade(1, 1, 2019, "Tipo", "Desc Questão", "Objeto", "Provinha", 22.4, 22.4, 22.4, -9)
         );
+    }
+    
+    public void LoadTableView() {
+        table.setItems(listaDeObjetos());
     }
     
 }

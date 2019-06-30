@@ -23,5 +23,6 @@ public class Enade extends Application {
         controller.CloseApp();
         controller.OpenAboutWindow();
         controller.OpenEnadeModal();
+        controller.LoadTableView();
     }
 }
