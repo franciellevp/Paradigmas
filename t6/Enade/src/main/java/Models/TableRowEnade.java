@@ -1,29 +1,84 @@
 package Models;
 
 public class TableRowEnade {
-    private int Id;
-    private int IdQuestao;
-    private int Ano;
+
+    private String Id;
+    private String IdQuestao;
+    private String Ano;
     private String Tipo;
-    private String Questao;
     private String Objeto;
     private String Prova;
-    private double AcertoCurso;
-    private double AcertoRegiao;
-    private double AcertoBr;
-    private double Diferenca;
+    private String AcertoCurso;
+    private String AcertoRegiao;
+    private String AcertoBr;
+    private String Diferenca;
 
-    public TableRowEnade(int Id, int IdQuestao, int Ano, String Tipo, String Questao, String Objeto, String Prova, double AcertoCurso, double AcertoRegiao, double AcertoBr, double Diferenca) {
+    public TableRowEnade(String Id, String IdQuestao, String Ano, String Tipo, String Objeto, String Prova, String AcertoCurso, String AcertoRegiao, String AcertoBr, String Diferenca) {
         this.Id = Id;
         this.IdQuestao = IdQuestao;
         this.Ano = Ano;
         this.Tipo = Tipo;
-        this.Questao = Questao;
         this.Objeto = Objeto;
         this.Prova = Prova;
         this.AcertoCurso = AcertoCurso;
         this.AcertoRegiao = AcertoRegiao;
         this.AcertoBr = AcertoBr;
+        this.Diferenca = Diferenca;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }
+
+    public String getIdQuestao() {
+        return IdQuestao;
+    }
+
+    public void setIdQuestao(String IdQuestao) {
+        this.IdQuestao = IdQuestao;
+    }
+
+    public String getAno() {
+        return Ano;
+    }
+
+    public void setAno(String Ano) {
+        this.Ano = Ano;
+    }
+
+    public String getAcertoCurso() {
+        return AcertoCurso;
+    }
+
+    public void setAcertoCurso(String AcertoCurso) {
+        this.AcertoCurso = AcertoCurso;
+    }
+
+    public String getAcertoRegiao() {
+        return AcertoRegiao;
+    }
+
+    public void setAcertoRegiao(String AcertoRegiao) {
+        this.AcertoRegiao = AcertoRegiao;
+    }
+
+    public String getAcertoBr() {
+        return AcertoBr;
+    }
+
+    public void setAcertoBr(String AcertoBr) {
+        this.AcertoBr = AcertoBr;
+    }
+
+    public String getDiferenca() {
+        return Diferenca;
+    }
+
+    public void setDiferenca(String Diferenca) {
         this.Diferenca = Diferenca;
     }
 
@@ -35,83 +90,12 @@ public class TableRowEnade {
         this.Prova = Prova;
     }
 
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int Id) {
-        this.Id = Id;
-    }
-
-    public int getIdQuestao() {
-        return IdQuestao;
-    }
-
-    public void setIdQuestao(int IdQuestao) {
-        this.IdQuestao = IdQuestao;
-    }
-
-    public int getAno() {
-        return Ano;
-    }
-
-    public void setAno(int Ano) {
-        this.Ano = Ano;
-    }
-
-    public String getTipo() {
-        return Tipo;
-    }
-
     public void setTipo(String Tipo) {
         this.Tipo = Tipo;
-    }
-
-    public String getQuestao() {
-        return Questao;
-    }
-
-    public void setQuestao(String Questao) {
-        this.Questao = Questao;
     }
 
     public String getObjeto() {
         return Objeto;
     }
 
-    public void setObjeto(String Objeto) {
-        this.Objeto = Objeto;
-    }
-
-    public double getAcertoCurso() {
-        return AcertoCurso;
-    }
-
-    public void setAcertoCurso(double AcertoCurso) {
-        this.AcertoCurso = AcertoCurso;
-    }
-
-    public double getAcertoRegiao() {
-        return AcertoRegiao;
-    }
-
-    public void setAcertoRegiao(double AcertoRegiao) {
-        this.AcertoRegiao = AcertoRegiao;
-    }
-
-    public double getAcertoBr() {
-        return AcertoBr;
-    }
-
-    public void setAcertoBr(double AcertoBr) {
-        this.AcertoBr = AcertoBr;
-    }
-
-    public double getDiferenca() {
-        return Diferenca;
-    }
-
-    public void setDiferenca(double Diferenca) {
-        this.Diferenca = Diferenca;
-    }
 }

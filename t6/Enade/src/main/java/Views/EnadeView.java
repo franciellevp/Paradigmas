@@ -11,10 +11,11 @@ public class EnadeView {
 
     private Stage stage = new Stage();
     private final MenuView menu = new MenuView();
-    private final EnadeTableView table = new EnadeTableView();
+    private final EnadeTableView table;
 
-    public EnadeView(Stage stage) {
+    public EnadeView(Stage stage, EnadeTableView table) {
         this.stage = stage;
+        this.table = table;
     }
 
     public Stage getStage() {

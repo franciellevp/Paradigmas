@@ -4,6 +4,9 @@ import Utils.Constants;
 import Models.EnadeModel;
 import Views.*;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,11 +20,13 @@ public class EnadeController extends EnadeModel {
     private final EnadeModel model;
     @FXML
     private final EnadeView view;
+    private final EnadeTableView tableView;
     private final ChangeUrlView urlView = new ChangeUrlView();
 
-    public EnadeController(EnadeModel model, EnadeView view) {
+    public EnadeController(EnadeModel model, EnadeView view, EnadeTableView tableView) {
         this.model = model;
         this.view = view;
+        this.tableView = tableView;
     }
 
     @FXML
@@ -59,7 +64,11 @@ public class EnadeController extends EnadeModel {
             @Override
             public void handle(ActionEvent e) {
                 model.GetFileCSV();
-                model.ReadCSVFile();
+                try {
+                    tableView.setTableView(model.GetCSVFileContent());
+                } catch (IOException ex) {
+                    Logger.getLogger(EnadeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         };
         view.getMenu().getSubMenuReload().setOnAction(event);
@@ -91,14 +100,12 @@ public class EnadeController extends EnadeModel {
     }
 
     @FXML
-    public void LoadTableView() {
+    public void LoadTableView() throws IOException {
         File file = new File(Constants.FILEPATH);
         if (model.CheckFileExist(file)) {
-            EnadeTableView tableView = new EnadeTableView();
-            model.ReadCSVFile();
+            tableView.setTableView(model.GetCSVFileContent());
             tableView.LoadTableView();
         } else {
-            System.out.println("Abaixa aqui");
             model.GetFileCSV();
         }
     }

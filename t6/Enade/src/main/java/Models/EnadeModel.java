@@ -1,21 +1,30 @@
 package Models;
 
 import Utils.Constants;
+import Views.EnadeTableView;
+import com.opencsv.CSVReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Reader;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 public class EnadeModel {
-    private String urlCC;
 
-    public EnadeModel(String urlCC) {
+    private String urlCC;
+    private EnadeTableView tableView;
+
+    public EnadeModel(String urlCC, EnadeTableView tableView) {
         this.urlCC = urlCC;
+        this.tableView = tableView;
     }
 
     public EnadeModel() {
@@ -28,6 +37,14 @@ public class EnadeModel {
 
     public void setUrlCC(String urlCC) {
         this.urlCC = urlCC;
+    }
+
+    public EnadeTableView getTableView() {
+        return tableView;
+    }
+
+    public void setTableView(EnadeTableView tableView) {
+        this.tableView = tableView;
     }
 
     public boolean CheckFileExist(File file) {
@@ -48,7 +65,29 @@ public class EnadeModel {
         }
     }
 
-    public void ReadCSVFile() {
-        System.out.println("------------- LENDO CSV -----------");
+    public ArrayList<TableRowEnade> GetCSVFileContent() throws IOException {
+        try (
+                Reader reader = Files.newBufferedReader(Paths.get(Constants.FILEPATH));
+                CSVReader csvReader = new CSVReader(reader);) {
+            // Reading Records One by One in a String array
+            ArrayList<TableRowEnade> list = new ArrayList<>();
+            String[] nextRecord;
+            while ((nextRecord = csvReader.readNext()) != null) {
+                TableRowEnade row = new TableRowEnade(
+                        nextRecord[4],
+                        nextRecord[4],
+                        nextRecord[1],
+                        nextRecord[3],
+                        nextRecord[5],
+                        nextRecord[2],
+                        nextRecord[8],
+                        nextRecord[9],
+                        nextRecord[10],
+                        nextRecord[11]
+                );
+                list.add(row);
+            }
+            return list;
+        }
     }
 }
