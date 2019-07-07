@@ -18,6 +18,7 @@ public class MainApp extends Application {
         controller.CloseApp();
         controller.OpenAboutWindow();
         controller.OpenFileChooserWindow();
+        controller.AnalyzeCommit();
     }
 
     public static void main(String[] args) {

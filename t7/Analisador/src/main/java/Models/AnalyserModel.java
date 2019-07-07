@@ -51,11 +51,9 @@ public class AnalyserModel {
         this.index = index;
     }
     
-    
-    
     public void ReadFileContent(String fileName) {
         try {
-            String path = Constants.FILEPATH;
+            String path = Constants.FILEPATH + Constants.FILENAME;
             BufferedReader br = new BufferedReader(new FileReader(path));
             String line;
             while ((line = br.readLine()) != null) {

@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -38,13 +39,17 @@ public class AnalyserView {
 
     public void DrawView() throws IOException {
         menu.DrawMenu();
+        HBox pane = new HBox();
         ListView<String> listView = new ListView<>();
-        listView.setPrefSize(200, 250);
+        pane.getChildren().add(listView);
         listView.setItems(model.getElements());
+        
         BorderPane.setAlignment(menu.getMenu(), Pos.TOP_CENTER);
         BorderPane root = new BorderPane();
+        BorderPane.setAlignment(menu.getMenu(), Pos.TOP_CENTER);
+        BorderPane.setAlignment(pane, Pos.CENTER_LEFT);
         root.setTop(menu.getMenu());
-        root.setCenter(listView);
+        root.setLeft(listView);
         root.setPrefSize(Constants.WIDTH, Constants.HEIGHT);
         root.setStyle("-fx-padding: 6; -fx-background-color: snow;"); // Set the Style-properties of the BorderPane
 

@@ -1,8 +1,12 @@
 package Controllers;
 
-import Models.AnalyserModel;
+import Models.*;
 import Views.*;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,7 +20,7 @@ public class AnalyserController extends AnalyserModel {
     private final AnalyserModel model;
     @FXML
     private final AnalyserView view;
-    
+
     public AnalyserController(AnalyserModel model, AnalyserView view) {
         this.model = model;
         this.view = view;
@@ -39,7 +43,7 @@ public class AnalyserController extends AnalyserModel {
         };
         view.getMenu().getSubMenuAbout().setOnAction(event);
     }
-    
+
     public void OpenFileChooserWindow() {
         view.getMenu().getsubMenuOpen().setOnAction((ActionEvent) -> {
             File file = model.OpenFileChooser(view.getStage(), view.getFileChooser());
@@ -47,9 +51,39 @@ public class AnalyserController extends AnalyserModel {
         });
     }
 
+    public void AnalyzeCommit() {
+        view.getMenu().getMenuTools().setOnAction((ActionEvent) -> {
+            ApiGsonModel m = new ApiGsonModel();
+            RepoCommitModel repo = new RepoCommitModel();
+            try {
+                for (String e : model.getElements()) {
+                    m.GetCommitList(e, repo);
+                }
+                System.out.println("----COMMITs---");
+                if (repo.getRepository() != null) {
+                    for (HashMap.Entry<String, ArrayList<CommitModel>> entry : repo.getRepository().entrySet()) {
+                        String key = entry.getKey();
+                        ArrayList<CommitModel> value = entry.getValue();
+                        for (CommitModel commit : value) {
+                            System.out.println("DATA: " + commit.getData() + " | " + "MSG: " + commit.getMessage());
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(AnalyserController.class.getName()).log(Level.SEVERE, null, ex);
+                ShowErrorMessage();
+            }
+        });
+    }
+
     @FXML
     public void ShowSuccessMessage() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Operação realizada com sucesso.", ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Operação realizada com sucesso", ButtonType.OK);
+        alert.show();
+    }
+
+    public void ShowErrorMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "Erro ao realizar operação", ButtonType.OK);
         alert.show();
     }
 }
