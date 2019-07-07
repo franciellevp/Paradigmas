@@ -4,7 +4,8 @@ import com.google.gson.*;
 import java.io.IOException;
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ApiGsonModel {
 
@@ -28,7 +29,7 @@ public class ApiGsonModel {
         JsonParser parser = new JsonParser();
         JsonArray results = parser.parse(in.readLine()).getAsJsonArray();
 
-        ArrayList<CommitModel> commits = new ArrayList<>();
+        ObservableList<CommitModel> commits = FXCollections.observableArrayList();
         for (JsonElement e : results) {
             CommitModel commit = new CommitModel(
                 e.getAsJsonObject().get("commit").getAsJsonObject().get("message").toString(),

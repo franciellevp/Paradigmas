@@ -1,7 +1,7 @@
 package git.analisador;
 
 import Controllers.AnalyserController;
-import Models.AnalyserModel;
+import Models.*;
 import Views.AnalyserView;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -12,13 +12,15 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         AnalyserModel model = new AnalyserModel();
-        AnalyserView view = new AnalyserView(stage, model);
+        RepoCommitModel repo = new RepoCommitModel();
+        AnalyserView view = new AnalyserView(stage, model, repo);
         view.DrawView();
-        AnalyserController controller = new AnalyserController(model, view);
+        AnalyserController controller = new AnalyserController(model, view, repo);
         controller.CloseApp();
         controller.OpenAboutWindow();
         controller.OpenFileChooserWindow();
         controller.AnalyzeCommit();
+        controller.ShowListCommits();
     }
 
     public static void main(String[] args) {

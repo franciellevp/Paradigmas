@@ -1,6 +1,6 @@
 package Views;
 
-import Models.AnalyserModel;
+import Models.*;
 import Utils.Constants;
 import java.io.IOException;
 import javafx.geometry.Pos;
@@ -17,14 +17,18 @@ public class AnalyserView {
     private final MenuView menu;
     private FileChooser fileChooser;
     private AnalyserModel model;
-    
-    public AnalyserView(Stage stage, AnalyserModel model) {
+    private RepoCommitModel repoModel;
+    ListView<String> listCommits;
+
+    public AnalyserView(Stage stage, AnalyserModel model, RepoCommitModel repoModel) {
         this.stage = stage;
         this.menu = new MenuView();
         this.fileChooser = new FileChooser();
         this.model = model;
+        this.repoModel = repoModel;
+        this.listCommits = new ListView<>();
     }
-    
+
     public Stage getStage() {
         return stage;
     }
@@ -33,23 +37,41 @@ public class AnalyserView {
         return menu;
     }
 
+    public ListView<String> getListCommits() {
+        return listCommits;
+    }
+
+    public void setListCommits(ListView<String> listCommits) {
+        this.listCommits = listCommits;
+    }
+
     public FileChooser getFileChooser() {
         return fileChooser;
     }
 
     public void DrawView() throws IOException {
         menu.DrawMenu();
-        HBox pane = new HBox();
-        ListView<String> listView = new ListView<>();
-        pane.getChildren().add(listView);
-        listView.setItems(model.getElements());
-        
+
+        HBox paneUrl = new HBox();
+        ListView<String> listUrl = new ListView<>();
+        paneUrl.getChildren().add(listUrl);
+        listUrl.setItems(model.getUrls());
+
+        HBox paneCommits = new HBox();
+        paneUrl.getChildren().add(listCommits);
+
+        HBox mainPane = new HBox();
+        mainPane.getChildren().addAll(paneUrl, paneCommits);
+
         BorderPane.setAlignment(menu.getMenu(), Pos.TOP_CENTER);
         BorderPane root = new BorderPane();
         BorderPane.setAlignment(menu.getMenu(), Pos.TOP_CENTER);
-        BorderPane.setAlignment(pane, Pos.CENTER_LEFT);
+        BorderPane.setAlignment(paneUrl, Pos.CENTER_LEFT);
+        BorderPane.setAlignment(paneCommits, Pos.CENTER_RIGHT);
+        BorderPane.setAlignment(mainPane, Pos.CENTER);
         root.setTop(menu.getMenu());
-        root.setLeft(listView);
+        root.setLeft(paneUrl);
+        root.setRight(paneCommits);
         root.setPrefSize(Constants.WIDTH, Constants.HEIGHT);
         root.setStyle("-fx-padding: 6; -fx-background-color: snow;"); // Set the Style-properties of the BorderPane
 

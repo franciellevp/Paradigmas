@@ -3,11 +3,11 @@ package Controllers;
 import Models.*;
 import Views.*;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,10 +20,13 @@ public class AnalyserController extends AnalyserModel {
     private final AnalyserModel model;
     @FXML
     private final AnalyserView view;
+    @FXML
+    private final RepoCommitModel repo;
 
-    public AnalyserController(AnalyserModel model, AnalyserView view) {
+    public AnalyserController(AnalyserModel model, AnalyserView view, RepoCommitModel repo) {
         this.model = model;
         this.view = view;
+        this.repo = repo;
     }
 
     @FXML
@@ -54,26 +57,23 @@ public class AnalyserController extends AnalyserModel {
     public void AnalyzeCommit() {
         view.getMenu().getMenuTools().setOnAction((ActionEvent) -> {
             ApiGsonModel m = new ApiGsonModel();
-            RepoCommitModel repo = new RepoCommitModel();
             try {
-                for (String e : model.getElements()) {
+                for (String e : model.getUrls()) {
                     m.GetCommitList(e, repo);
                 }
-                System.out.println("----COMMITs---");
-                if (repo.getRepository() != null) {
-                    for (HashMap.Entry<String, ArrayList<CommitModel>> entry : repo.getRepository().entrySet()) {
-                        String key = entry.getKey();
-                        ArrayList<CommitModel> value = entry.getValue();
-                        for (CommitModel commit : value) {
-                            System.out.println("DATA: " + commit.getData() + " | " + "MSG: " + commit.getMessage());
-                        }
-                    }
-                }
+                ShowListCommits();
             } catch (Exception ex) {
                 Logger.getLogger(AnalyserController.class.getName()).log(Level.SEVERE, null, ex);
                 ShowErrorMessage();
             }
         });
+    }
+    
+    public void ShowListCommits() {
+        for (HashMap.Entry<String, ObservableList<CommitModel>> entry : repo.getRepository().entrySet()) {
+            String key = entry.getKey();
+            view.getListCommits().setItems(repo.getListCommits(key));
+        }
     }
 
     @FXML

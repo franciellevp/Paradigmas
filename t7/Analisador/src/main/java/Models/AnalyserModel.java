@@ -12,18 +12,18 @@ import javafx.stage.Stage;
 
 public class AnalyserModel {
     private String fileName;
-    private ObservableList<String> elements;
+    private ObservableList<String> urls;
     private int index;
 
-    public AnalyserModel(String fileName, ObservableList<String> elements, int index) {
+    public AnalyserModel(String fileName, ObservableList<String> urls, int index) {
         this.fileName = fileName;
-        this.elements = elements;
+        this.urls = urls;
         this.index = index;
     }
 
     public AnalyserModel() {
         this.index = 0;
-        this.elements = FXCollections.observableArrayList();
+        this.urls = FXCollections.observableArrayList();
         this.fileName = "";
     }
 
@@ -35,12 +35,12 @@ public class AnalyserModel {
         this.fileName = fileName;
     }
 
-    public ObservableList<String> getElements() {
-        return elements;
+    public ObservableList<String> getUrls() {
+        return urls;
     }
 
-    public void setElements(ObservableList<String> elements) {
-        this.elements = elements;
+    public void setUrls(ObservableList<String> urls) {
+        this.urls = urls;
     }
 
     public int getIndex() {
@@ -57,7 +57,7 @@ public class AnalyserModel {
             BufferedReader br = new BufferedReader(new FileReader(path));
             String line;
             while ((line = br.readLine()) != null) {
-                elements.add(line);
+                urls.add(line);
             }
             br.close();
         } catch (IOException ex) {
