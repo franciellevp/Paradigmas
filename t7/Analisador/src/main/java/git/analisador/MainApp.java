@@ -20,7 +20,6 @@ public class MainApp extends Application {
         controller.OpenAboutWindow();
         controller.OpenFileChooserWindow();
         controller.AnalyzeCommit();
-        controller.ShowListCommits();
     }
 
     public static void main(String[] args) {

@@ -5,6 +5,7 @@ import Utils.Constants;
 import java.io.IOException;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -18,7 +19,8 @@ public class AnalyserView {
     private FileChooser fileChooser;
     private AnalyserModel model;
     private RepoCommitModel repoModel;
-    ListView<String> listCommits;
+    private Label listCommits;
+    private Label commitsLabel;
 
     public AnalyserView(Stage stage, AnalyserModel model, RepoCommitModel repoModel) {
         this.stage = stage;
@@ -26,7 +28,16 @@ public class AnalyserView {
         this.fileChooser = new FileChooser();
         this.model = model;
         this.repoModel = repoModel;
-        this.listCommits = new ListView<>();
+        this.listCommits = new Label();
+        this.commitsLabel = new Label();
+    }
+
+    public Label getCommitsLabel() {
+        return commitsLabel;
+    }
+
+    public void setCommitsLabel(Label commitsLabel) {
+        this.commitsLabel = commitsLabel;
     }
 
     public Stage getStage() {
@@ -37,11 +48,11 @@ public class AnalyserView {
         return menu;
     }
 
-    public ListView<String> getListCommits() {
+    public Label getListCommits() {
         return listCommits;
     }
 
-    public void setListCommits(ListView<String> listCommits) {
+    public void setListCommits(Label listCommits) {
         this.listCommits = listCommits;
     }
 
@@ -58,7 +69,7 @@ public class AnalyserView {
         listUrl.setItems(model.getUrls());
 
         HBox paneCommits = new HBox();
-        paneUrl.getChildren().add(listCommits);
+        paneUrl.getChildren().add(commitsLabel);
 
         HBox mainPane = new HBox();
         mainPane.getChildren().addAll(paneUrl, paneCommits);

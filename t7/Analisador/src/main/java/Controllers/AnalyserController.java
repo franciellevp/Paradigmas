@@ -3,9 +3,8 @@ package Controllers;
 import Models.*;
 import Views.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,21 +58,35 @@ public class AnalyserController extends AnalyserModel {
             ApiGsonModel m = new ApiGsonModel();
             try {
                 for (String e : model.getUrls()) {
-                    m.GetCommitList(e, repo);
+                    m.setUrlRepo(e);
+                    m.setModel(repo);
+                    m.GetCommitList();
                 }
-                ShowListCommits();
-            } catch (Exception ex) {
-                Logger.getLogger(AnalyserController.class.getName()).log(Level.SEVERE, null, ex);
+                ShowCommitsMessagesCount();
+            } catch (IOException ex) {
                 ShowErrorMessage();
             }
         });
     }
-    
-    public void ShowListCommits() {
+
+    private String ShowListCommits(String key) {
+        String label = "";
+        for (CommitModel x : repo.getListCommitsModel(key)) {
+            label += "        Data: " + x.getData() + " | " + "Mensagem: " + x.getMessage() + "\n";
+        }
+        return label;
+    }
+
+    public void ShowCommitsMessagesCount() {
+        String label = "";
         for (HashMap.Entry<String, ObservableList<CommitModel>> entry : repo.getRepository().entrySet()) {
             String key = entry.getKey();
-            view.getListCommits().setItems(repo.getListCommits(key));
+            label += "Repositório: " + key + "\n";
+            label += "   Número de commits: " + repo.GetNumberCommits(key) + "\n";
+            label += "   Tamanho médio commits: " + repo.GetCommitMessageSize(key) + "\n";
+            label += ShowListCommits(key);
         }
+        view.getCommitsLabel().setText(label);
     }
 
     @FXML
