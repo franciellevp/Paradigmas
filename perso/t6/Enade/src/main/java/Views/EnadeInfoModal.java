@@ -1,7 +1,9 @@
 package Views;
 
 import Models.TableRowEnade;
+import Models.EnadeTableModel;
 import Utils.Constants;
+import Utils.Operacao;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,10 +34,12 @@ public class EnadeInfoModal {
     private Stage parentStage;
     private Stage stage;
     private TableRowEnade data;
+    private EnadeTableView viewModel;
 
-    public EnadeInfoModal(Stage parentStage, TableRowEnade data) {
+    public EnadeInfoModal(Stage parentStage, TableRowEnade data, EnadeTableView viewModel) {
         this.parentStage = parentStage;
         this.data = data;
+        this.viewModel = viewModel;
         this.stage = new Stage();
     }
 
@@ -57,9 +61,9 @@ public class EnadeInfoModal {
                     + "\nGabarito: " + data.getGabarito();
             Label infosQuestao = new Label(infos);
             infoRow.getChildren().add(infosQuestao);
-            double acertoC = Double.parseDouble(data.getAcertoCurso().replace(",", "."));
-            double acertoR = Double.parseDouble(data.getAcertoRegiao().replace(",", "."));
-            double acertoB = Double.parseDouble(data.getAcertoBr().replace(",", "."));
+            double acertoC = Operacao.StringToDouble(data.getAcertoCurso());
+            double acertoR = Operacao.StringToDouble(data.getAcertoRegiao());
+            double acertoB = Operacao.StringToDouble(data.getAcertoBr());
             grafRow.getChildren().add(DrawBarGraph(acertoC, acertoR, acertoB));
 
             row.getChildren().addAll(infoRow, grafRow);
@@ -123,15 +127,15 @@ public class EnadeInfoModal {
         NumberAxis yAxis = new NumberAxis();
         BarChart<String,Number> bc = 
             new BarChart<>(xAxis,yAxis);
-        bc.setTitle("Número de acertos");
-        xAxis.setLabel("Acertos");       
-        yAxis.setLabel("Quantidade de acertos"); 
+        bc.setTitle("Percentual de acertos da questão");
+        xAxis.setLabel("Acertos por Categoria");       
+        yAxis.setLabel("Porcentagem"); 
         
         XYChart.Series series = new XYChart.Series();
-        //series1.setName("2003");
-        series.getData().add(new XYChart.Data("Acerto por Curso", 25601.34));
-        series.getData().add(new XYChart.Data("Acerto por Região", 20148.82));
-        series.getData().add(new XYChart.Data("Acerto Brasil", 10000));
+        series.setName("Acertos");
+        series.getData().add(new XYChart.Data("Acerto por Curso", acertoCurso));
+        series.getData().add(new XYChart.Data("Acerto por Região", acertoRegiao));
+        series.getData().add(new XYChart.Data("Acerto Brasil", acertoBr));
         bc.getData().add(series);
         return bc;
     }

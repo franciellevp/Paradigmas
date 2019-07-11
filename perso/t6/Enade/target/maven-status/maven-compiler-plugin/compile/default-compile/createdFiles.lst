@@ -1,3 +1,4 @@
+Utils/Operacao.class
 Controllers/EnadeController.class
 Views/EnadeInfoModal.class
 Models/EnadeModel.class
@@ -8,3 +9,4 @@ Utils/Constants.class
 Views/EnadeView.class
 enade/enade/MainApp.class
 Views/MenuView.class
+Models/EnadeTableModel.class

@@ -124,14 +124,14 @@ public class EnadeInfoModal {
         BarChart<String,Number> bc = 
             new BarChart<>(xAxis,yAxis);
         bc.setTitle("Número de acertos");
-        xAxis.setLabel("Acertos");       
+        xAxis.setLabel("Acertos por categoria");       
         yAxis.setLabel("Quantidade de acertos"); 
         
         XYChart.Series series = new XYChart.Series();
-        //series1.setName("2003");
-        series.getData().add(new XYChart.Data("Acerto por Curso", 25601.34));
-        series.getData().add(new XYChart.Data("Acerto por Região", 20148.82));
-        series.getData().add(new XYChart.Data("Acerto Brasil", 10000));
+        series.setName("Acertos");
+        series.getData().add(new XYChart.Data("Acerto por Curso", acertoCurso));
+        series.getData().add(new XYChart.Data("Acerto por Região", acertoRegiao));
+        series.getData().add(new XYChart.Data("Acerto Brasil", acertoBr));
         bc.getData().add(series);
         return bc;
     }

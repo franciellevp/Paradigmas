@@ -136,5 +136,5 @@ public class TableRowEnade {
 
     public void setObjeto(String Objeto) {
         this.Objeto = Objeto;
-    }
+    } 
 }

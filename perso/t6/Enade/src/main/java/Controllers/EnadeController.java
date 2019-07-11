@@ -69,7 +69,7 @@ public class EnadeController extends EnadeModel {
     public void GetSelectedRow() {
         tableView.getTable().setOnMousePressed((MouseEvent e) -> {
             TableRowEnade rowData = tableView.getTable().getSelectionModel().getSelectedItem();
-            EnadeInfoModal modalView = new EnadeInfoModal(view.getStage(), rowData);
+            EnadeInfoModal modalView = new EnadeInfoModal(view.getStage(), rowData, tableView);
             modalView.DrawModal();
         });
     }
